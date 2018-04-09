@@ -82,11 +82,14 @@ if(!is_null($events)){
     }
 }
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-    //$textMessageBuilder = new TextMessageBuilder(json_encode($events));
+    $textMessageBuilder1 = new TextMessageBuilder(json_encode($events));
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-    $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
+    $textMessageBuilder2 = new TextMessageBuilder($textReplyMessage);
  
 // ส่วนของคำสั่งตอบกลับข้อความ
+    $bot->replyMessage($replyToken,$textMessageBuilder1);
+    $bot->replyMessage($replyToken,$textMessageBuilder2);
+
     $response = $bot->replyMessage($replyToken,$textMessageBuilder);
     if ($response->isSucceeded()) {
         echo 'Succeeded!';
