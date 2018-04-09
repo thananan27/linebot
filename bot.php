@@ -59,7 +59,8 @@ $content = file_get_contents('php://input');
 $events = json_decode($content, true);
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-    $replyToken = $events['events'][0]['replyToken'];
+    //$replyToken = $events['events'][0]['replyToken'];
+    $replyToken = "U8713af209e7a965ae29125447aa406c2";
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     switch ($typeMessage){
@@ -82,18 +83,15 @@ if(!is_null($events)){
     }
 }
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-    $textMessageBuilder1 = new TextMessageBuilder(json_encode($events));
+    //$textMessageBuilder = new TextMessageBuilder(json_encode($events));
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
-    $textMessageBuilder2 = new TextMessageBuilder($textReplyMessage);
  
 // ส่วนของคำสั่งตอบกลับข้อความ
-    $bot->replyMessage($replyToken,$textMessageBuilder1);
-    $bot->replyMessage($replyToken,$textMessageBuilder2);
+    $textMessageBuilder = $bot->replyMessage($replyToken,$textReplyMessage);
 
-    $response1 = $bot->replyMessage($replyToken,$textMessageBuilder1);
-    $response2 = $bot->replyMessage($replyToken,$textMessageBuilder2);
-    
-    if ($response1->isSucceeded() &&  $response2->isSucceeded()) {
+    $response = $bot->replyMessage($replyToken,$textMessageBuilder);
+
+    if ($response->isSucceeded()) {
         echo 'Succeeded!';
         return;
     }
