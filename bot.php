@@ -61,7 +61,7 @@ $events = json_decode($content, true);
 
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-    $replyToken = $events['events'][0]['replyToken'];
+    $replyToken = $events['events'][0]['source']['groupId'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = strtolower($events['events'][0]['message']['text']);
    
@@ -137,11 +137,13 @@ if(!is_null($events)){
             }
             break;
         default:
-            $textReplyMessage = json_encode($events);
+            $textReplyMessage = json_encode($event);
             $replyData = new TextMessageBuilder($textReplyMessage);         
             break;  
     }
 //l ส่วนของคำสั่งตอบกลับข้อความ
+
+
 $response = $bot->replyMessage($replyToken , $replyData);
  
     if ($response->isSucceeded()) {
