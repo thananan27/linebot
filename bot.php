@@ -94,5 +94,7 @@ if(!is_null($events)){
     }
  
 // Failed
+echo "<pre>";
 echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+echo "</pre>";
 ?>
