@@ -60,7 +60,9 @@ $events = json_decode($content, true);
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     //$replyToken = $events['events'][0]['replyToken'];
-    $replyToken = "U8713af209e7a965ae29125447aa406c2";
+    $replyToken = "5661b4866d8a45e39846cb31eb81b859"; //token steve
+    //$replyToken = "a920bf194f8f41669604c3d6d56b8e6d"; //token phawit
+    
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
     switch ($typeMessage){
