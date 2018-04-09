@@ -90,8 +90,10 @@ if(!is_null($events)){
     $bot->replyMessage($replyToken,$textMessageBuilder1);
     $bot->replyMessage($replyToken,$textMessageBuilder2);
 
-    $response = $bot->replyMessage($replyToken,$textMessageBuilder);
-    if ($response->isSucceeded()) {
+    $response1 = $bot->replyMessage($replyToken,$textMessageBuilder1);
+    $response2 = $bot->replyMessage($replyToken,$textMessageBuilder2);
+    
+    if ($response1->isSucceeded() &&  $response2->isSucceeded()) {
         echo 'Succeeded!';
         return;
     }
