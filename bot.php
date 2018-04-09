@@ -1,4 +1,4 @@
-<?
+<?php
 // กรณีต้องการตรวจสอบการแจ้ง error ให้เปิด 3 บรรทัดล่างนี้ให้ทำงาน กรณีไม่ ให้ comment ปิดไป
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -60,46 +60,42 @@ $events = json_decode($content, true);
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     //$replyToken = $events['events'][0]['replyToken'];
-    $replyToken = "5661b4866d8a45e39846cb31eb81b859"; //token steve
-    //$replyToken = "a920bf194f8f41669604c3d6d56b8e6d"; //token phawit
-    
+    $replyToken  = "5661b4866d8a45e39846cb31eb81b859";
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = $events['events'][0]['message']['text'];
-    switch ($typeMessage){
-        case 'text':
-            switch ($userMessage) {
-                case "A":
-                    $textReplyMessage = "คุณพิมพ์ A";
-                    break;
-                case "B":
-                    $textReplyMessage = "คุณพิมพ์ B";
-                    break;
-                default:
-                    $textReplyMessage = " คุณไม่ได้พิมพ์ A และ B";
-                    break;                                      
-            }
-            break;
-        default:
-            $textReplyMessage = json_encode($events);
-            break;  
-    }
+    // switch ($typeMessage){
+    //     case 'text':
+    //         switch ($userMessage) {
+    //             case "A":
+    //                 $textReplyMessage = "คุณพิมพ์ A";
+    //                 break;
+    //             case "B":
+    //                 $textReplyMessage = "คุณพิมพ์ B";
+    //                 break;
+    //             default:
+    //                 $textReplyMessage = " คุณไม่ได้พิมพ์ A และ B";
+    //                 break;                                      
+    //         }
+    //         break;
+    //     default:
+    //         $textReplyMessage = json_encode($events);
+    //         break;  
+    // }
+
+    $textReplyMessage = $events['events'][0]['message']['text'];
 }
 // ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
     //$textMessageBuilder = new TextMessageBuilder(json_encode($events));
-// ส่วนของคำสั่งจัดเตียมรูปแบบข้อความสำหรับส่ง
+      $textMessageBuilder = new TextMessageBuilder($textReplyMessage);
  
-// ส่วนของคำสั่งตอบกลับข้อความ
-    $textMessageBuilder = $bot->replyMessage($replyToken,$textReplyMessage);
+//l ส่วนของคำสั่งตอบกลับข้อความ
+$response = $bot->replyMessage($replyToken,$textMessageBuilder);
 
-    $response = $bot->replyMessage($replyToken,$textMessageBuilder);
-
-    if ($response->isSucceeded()) {
-        echo 'Succeeded!';
-        return;
-    }
+if ($response->isSucceeded()) {
+    echo 'Succeeded!';
+    return;
+}
  
 // Failed
-echo "<pre>";
 echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-echo "</pre>";
 ?>
