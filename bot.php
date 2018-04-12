@@ -61,7 +61,8 @@ $events = json_decode($content, true);
 
 if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
-    $replyToken = $events['events'][0]['source']['groupId'];
+    $replyToken = $events['events'][0]['replyToken'];
+    $joinevent = $events['events'][0]['type'];
     $typeMessage = $events['events'][0]['message']['type'];
     $userMessage = strtolower($events['events'][0]['message']['text']);
    
